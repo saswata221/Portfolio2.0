@@ -25,7 +25,6 @@ function usePrefersReducedMotion() {
   );
 }
 
-// Tailwind md breakpoint (768px)
 function useIsSmallScreen() {
   const [isSmall, setIsSmall] = useState(() =>
     typeof window !== "undefined"
@@ -86,20 +85,20 @@ export default function Hero() {
         </div>
       )}
 
-      {/* Navbar (desktop unchanged; mobile hamburger is inside the component) */}
+      {/* Navbar  */}
       <div className="absolute w-full z-[90]">
         <nav className="flex gap-6 text-white text-xl font-medium">
           <Navbar />
         </nav>
       </div>
 
-      {/* Vertical line — nudged left on mobile and longer; desktop unchanged via md: classes */}
+      {/* Vertical line */}
       <div className="pointer-events-none absolute z-50 left-[5%] md:left-[10%] top-[15%] flex flex-col items-center">
         <span className="h-6 w-6 rounded-full bg-[#8b5cf6]"></span>
         <span className="h-[28rem] md:h-96 w-1 bg-gradient-to-b from-[#8b5cf6] via-[#8b5cf6]/40 to-transparent"></span>
       </div>
 
-      {/* Heading — starts after the vertical line on mobile; desktop unchanged */}
+      {/* Heading  */}
       <div
         className="
           absolute z-20
@@ -119,7 +118,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Subtitle — aligned with heading on mobile; desktop unchanged */}
+      {/* Subtitle */}
       <div
         className="
           absolute z-20
@@ -134,7 +133,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* MOBILE: centered image (bigger, circular) + centered Resume BELOW the image */}
+      {/* MOBILE*/}
       <div
         className="
           md:hidden
@@ -159,7 +158,7 @@ export default function Hero() {
         </a>
       </div>
 
-      {/* DESKTOP image (unchanged) */}
+      {/* DESKTOP image  */}
       <div className="hidden md:block absolute top-48 right-0 z-30 p-6">
         <img
           src={pp}
@@ -168,7 +167,7 @@ export default function Hero() {
         />
       </div>
 
-      {/* DESKTOP Resume (unchanged) */}
+      {/* DESKTOP Resume  */}
       <div className="hidden md:block absolute top-[60%] left-[13%] z-50">
         <a
           href="https://drive.google.com/file/d/1QUktRR2PrcHuDX4dl_A_5UmQg_CokAqO/view?usp=sharing"

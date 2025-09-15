@@ -4,6 +4,10 @@ import { motion, useInView } from "motion/react";
 import Particles from "../components/Particles";
 import contactAnim from "../assets/contactAnimation.json";
 
+// ICONS
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { SiLeetcode } from "react-icons/si";
+
 const Lottie = lazy(() => import("lottie-react"));
 
 function usePrefersReducedMotion() {
@@ -32,6 +36,31 @@ const rightVariant = {
     x: 0,
     filter: "blur(0px)",
     transition: { type: "spring", stiffness: 140, damping: 20, delay: 0.1 },
+  },
+};
+
+/* ICON ANIMATION — simple reveal (no bounce) */
+const iconsParent = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      delay: 0,
+      when: "beforeChildren",
+      staggerChildren: 0.06,
+    },
+  },
+};
+const iconItem = {
+  hidden: { opacity: 0, y: 28 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "tween",
+      duration: 0.3,
+      ease: [0.25, 0.8, 0.25, 1],
+    },
   },
 };
 
@@ -73,16 +102,40 @@ export default function Contact() {
     }
   }
 
+  const SOCIALS = [
+    {
+      href: "https://github.com/saswata221",
+      label: "GitHub",
+      Icon: FaGithub,
+      color: "#000000",
+      glow: "hover:shadow-[0_0_20px_rgba(51,51,51,0.5)]",
+    },
+    {
+      href: "https://www.linkedin.com/in/saswata-mahato-2218a7250/",
+      label: "LinkedIn",
+      Icon: FaLinkedin,
+      color: "#0A66C2",
+      glow: "hover:shadow-[0_0_20px_rgba(10,102,194,0.55)]",
+    },
+    {
+      href: "https://leetcode.com/u/Sam221bs/",
+      label: "LeetCode",
+      Icon: SiLeetcode,
+      color: "#FFA116",
+      glow: "hover:shadow-[0_0_20px_rgba(255,161,22,0.55)]",
+    },
+  ];
+
   return (
     <section id="contact" ref={sectionRef} className="relative bg-[#060918]">
-      {/* Background particles (only when visible & motion allowed) */}
+      {/* Background particles */}
       {!reduceMotion && inView && (
         <div className="absolute inset-0 z-0">
           <Particles
             particleColors={["#ffffff", "#ffffff"]}
-            particleCount={320} // reduced from 700
+            particleCount={320}
             particleSpread={15}
-            speed={0.25} // slightly slower
+            speed={0.25}
             particleBaseSize={120}
             moveParticlesOnHover
             alphaParticles={false}
@@ -102,9 +155,8 @@ export default function Contact() {
           <span className="text-fuchsia-400">Get</span> in Touch
         </motion.h2>
 
-        {/* NOTE: grid is 1 column on mobile, 2 on lg+. We flip order with responsive `order-*` utilities */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
-          {/* RIGHT (on desktop): Lottie — but ordered FIRST on small screens */}
+          {/* RIGHT (Lottie + Icons) */}
           <motion.div
             variants={rightVariant}
             initial="hidden"
@@ -121,7 +173,7 @@ export default function Contact() {
                 lottieRef.current?.goToAndStop(0, true);
               } catch {}
             }}
-            className="order-1 lg:order-2 relative rounded-2xl overflow-hidden flex items-center justify-center"
+            className="order-1 lg:order-2 relative rounded-2xl overflow-hidden flex flex-col items-center justify-center"
           >
             {!reduceMotion && inView ? (
               <Suspense
@@ -147,9 +199,39 @@ export default function Contact() {
             ) : (
               <div className="w-full h-72 sm:h-96 md:h-[420px] lg:h-[460px]" />
             )}
+
+            {/* SOCIAL ICONS */}
+            <motion.div
+              variants={iconsParent}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: false, amount: 0.2 }}
+              className="mt-3 sm:mt-4 flex items-center justify-center gap-5 sm:gap-6"
+              style={{ willChange: "transform" }}
+            >
+              {SOCIALS.map(({ href, label, Icon, color, glow }) => (
+                <motion.a
+                  key={label}
+                  variants={iconItem}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className={[
+                    "group inline-flex items-center justify-center size-12 sm:size-14 rounded-full",
+                    "bg-white border border-gray-200/70 shadow-sm transition",
+                    "hover:bg-gray-50 hover:-translate-y-1 hover:shadow-md active:translate-y-0.5",
+                    glow,
+                  ].join(" ")}
+                  style={{ willChange: "transform" }}
+                >
+                  <Icon className="text-2xl sm:text-3xl" style={{ color }} />
+                </motion.a>
+              ))}
+            </motion.div>
           </motion.div>
 
-          {/* LEFT (on desktop): Form — but ordered SECOND on small screens */}
+          {/* LEFT (Form) */}
           <motion.div
             variants={leftVariant}
             initial="hidden"

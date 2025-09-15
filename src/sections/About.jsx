@@ -50,7 +50,7 @@ function About() {
                 imageSrc={role.imageSrc}
                 altText={role.title}
                 captionText={role.caption}
-                containerHeight="280px" // desktop shape (landscape)
+                containerHeight="280px"
                 containerWidth="250px"
                 imageHeight="280px"
                 imageWidth="250px"
