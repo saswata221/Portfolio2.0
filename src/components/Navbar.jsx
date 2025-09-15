@@ -14,6 +14,7 @@ function Navbar() {
 
   const closeAndGo = useCallback((hash) => {
     setOpen(false);
+    // ensure panel starts closing before we scroll
     requestAnimationFrame(() => {
       const el = document.querySelector(hash);
       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -24,9 +25,9 @@ function Navbar() {
   return (
     <div
       className="
-        fixed top-0 left-0 right-0 z-30
+        fixed inset-x-0 top-0 z-30
         backdrop-blur-xl bg-black/10 border-b border-purple-600/20
-        /* prevent any horizontal scroll on small screens */
+        /* kill horizontal scrollbars on small screens */
         overflow-x-clip md:overflow-visible
       "
     >
@@ -84,11 +85,14 @@ function Navbar() {
         </button>
       </div>
 
-      {/* Slide-in mobile menu panel */}
+      {/* Slide-in mobile menu panel (doesn't add page width when closed) */}
       <div
-        className={`md:hidden fixed inset-y-0 right-0 h-screen w-64 bg-[#0b0b15]/95 backdrop-blur-xl border-l border-purple-600/20 z-40 transform transition-transform duration-300
+        className={`md:hidden fixed inset-y-0 right-0 h-screen w-64
+        bg-[#0b0b15]/95 backdrop-blur-xl border-l border-purple-600/20 z-40
+        transform transition-transform duration-300
         ${open ? "translate-x-0" : "translate-x-full"}
-      `}
+        overflow-y-auto will-change-transform`}
+        aria-hidden={!open}
       >
         <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
           <span className="text-white text-lg font-semibold">Menu</span>
