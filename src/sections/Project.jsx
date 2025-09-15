@@ -3,6 +3,7 @@ import { motion, useAnimationControls, useInView } from "motion/react";
 import ProjectCard from "../components/ProjectCard";
 import travel from "../assets/travel.png";
 import eventu from "../assets/eventu.png";
+import ml from "../assets/ml.png";
 
 const PROJECTS = [
   {
@@ -16,7 +17,7 @@ const PROJECTS = [
   },
   {
     title: "⚡ PMSM Speed Control with TD3",
-    image: travel, // replace with your project thumbnail
+    image: ml,
     description:
       "An ML project that applies reinforcement learning to motor control. Using MATLAB/Simulink for PMSM modeling and a TD3 agent for learning stable and efficient speed control policies.",
     tags: [

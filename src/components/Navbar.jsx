@@ -6,18 +6,14 @@ function Navbar() {
 
   // Lock body scroll when menu is open (mobile)
   useEffect(() => {
-    if (open) {
-      const original = document.body.style.overflow;
-      document.body.style.overflow = "hidden";
-      return () => {
-        document.body.style.overflow = original;
-      };
-    }
+    if (!open) return;
+    const original = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => (document.body.style.overflow = original);
   }, [open]);
 
   const closeAndGo = useCallback((hash) => {
     setOpen(false);
-    // Small delay to ensure menu closes before scrolling
     requestAnimationFrame(() => {
       const el = document.querySelector(hash);
       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -26,7 +22,14 @@ function Navbar() {
   }, []);
 
   return (
-    <div className="fixed top-0 left-0 w-full z-30 backdrop-blur-xl bg-black/10 border-b border-purple-600/20">
+    <div
+      className="
+        fixed top-0 left-0 right-0 z-30
+        backdrop-blur-xl bg-black/10 border-b border-purple-600/20
+        /* prevent any horizontal scroll on small screens */
+        overflow-x-clip md:overflow-visible
+      "
+    >
       <div className="flex justify-between w-full px-5 sm:px-8 md:px-20 py-3 items-center">
         <div>
           <a
@@ -72,7 +75,6 @@ function Navbar() {
           onClick={() => setOpen(true)}
           className="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg border border-white/20 hover:border-white/40 transition"
         >
-          {/* three horizontal lines */}
           <span className="sr-only">Open menu</span>
           <div className="flex flex-col gap-1.5">
             <span className="block h-[2px] w-6 bg-white rounded" />
@@ -84,9 +86,9 @@ function Navbar() {
 
       {/* Slide-in mobile menu panel */}
       <div
-        className={`md:hidden fixed top-0 right-0 h-screen w-64 bg-[#0b0b15]/95 backdrop-blur-xl border-l border-purple-600/20 z-40 transform transition-transform duration-300 ${
-          open ? "translate-x-0" : "translate-x-full"
-        }`}
+        className={`md:hidden fixed inset-y-0 right-0 h-screen w-64 bg-[#0b0b15]/95 backdrop-blur-xl border-l border-purple-600/20 z-40 transform transition-transform duration-300
+        ${open ? "translate-x-0" : "translate-x-full"}
+      `}
       >
         <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
           <span className="text-white text-lg font-semibold">Menu</span>
@@ -96,7 +98,6 @@ function Navbar() {
             className="h-9 w-9 inline-flex items-center justify-center rounded-lg border border-white/20 hover:border-white/40 transition"
           >
             <span className="sr-only">Close</span>
-            {/* simple X */}
             <svg
               width="18"
               height="18"
