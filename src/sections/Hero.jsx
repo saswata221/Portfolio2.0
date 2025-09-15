@@ -139,7 +139,7 @@ export default function Hero() {
         className="
           md:hidden
           absolute left-1/2 -translate-x-1/2
-          top-[50vh]
+          top-[45vh]
           z-30
           flex flex-col items-center
         "
@@ -147,7 +147,7 @@ export default function Hero() {
         <img
           src={pp}
           alt="Profile"
-          className="h-64 w-64 sm:h-72 sm:w-72 object-cover rounded-full shadow-xl"
+          className="h-64 w-64 sm:h-80 sm:w-80 object-cover rounded-full shadow-xl"
         />
         <a
           href="https://drive.google.com/file/d/1QUktRR2PrcHuDX4dl_A_5UmQg_CokAqO/view?usp=sharing"
@@ -160,7 +160,7 @@ export default function Hero() {
       </div>
 
       {/* DESKTOP image (unchanged) */}
-      <div className="hidden md:block absolute top-48 right-20 z-30 p-6">
+      <div className="hidden md:block absolute top-48 right-0 z-30 p-6">
         <img
           src={pp}
           alt="Profile"
